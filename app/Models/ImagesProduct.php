@@ -14,6 +14,6 @@ class ImagesProduct extends Model
 
     public function productRelation()
     {
-        $this->hasOne(Product::class, 'id', 'product_id');
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 }

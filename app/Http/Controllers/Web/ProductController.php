@@ -17,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::paginate();
+
+        return view('admin.master.product.index', compact('products'));
     }
 
     /**
@@ -67,7 +69,7 @@ class ProductController extends Controller
             DB::rollback();
             dd($e);
         }
-        return redirect()->back();
+        return redirect()->route('product.index');
     }
 
     /**
@@ -78,7 +80,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::with(['imageRelation'])->findOrFail($id);
+        return view('admin.master.product.detail', compact('product'));
     }
 
     /**
