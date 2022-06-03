@@ -32,4 +32,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/product/{idproduct}', [ProductController::class, 'show'])->name('product.show');
     Route::get('/product/{idproduct}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::put('/product/{idproduct}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{idproduct}', [ProductController::class, 'destroy'])->name('product.destroy');
 });

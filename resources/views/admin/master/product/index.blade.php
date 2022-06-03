@@ -34,7 +34,12 @@
                         <td>
                             <a href="{{ route('product.show', $item->id) }}" class="btn btn-xs btn-primary"><span class="fa fa-external-link"></span></a>
                             <a href="{{ route('product.edit', $item->id) }}" class="btn btn-xs btn-warning"><span class="fa fa-edit"></span></a>
-                            <a href="" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></a>
+                            <a href="javascript:void(0)" onclick="$(this).find('form').submit()" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span>
+                                <form action="{{ route('product.destroy', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                </form>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
