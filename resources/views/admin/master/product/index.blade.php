@@ -33,7 +33,7 @@
                         </td>
                         <td>
                             <a href="{{ route('product.show', $item->id) }}" class="btn btn-xs btn-primary"><span class="fa fa-external-link"></span></a>
-                            <a href="" class="btn btn-xs btn-warning"><span class="fa fa-edit"></span></a>
+                            <a href="{{ route('product.edit', $item->id) }}" class="btn btn-xs btn-warning"><span class="fa fa-edit"></span></a>
                             <a href="" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></a>
                         </td>
                     </tr>
