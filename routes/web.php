@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\UsersController;
+use App\Models\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    // return view('auth.login');
+
+    $code = Transaction::getCode();
+    dd($code);
 })->middleware('guest');
 
 Auth::routes(['register' => false]);
