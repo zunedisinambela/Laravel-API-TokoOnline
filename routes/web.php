@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\UsersController;
 use App\Http\Controllers\Web\ProductController;
