@@ -122,6 +122,13 @@
                         </ul>
                     </li>
 
+                    <li class="treeview">
+                        <a href="{{ route('transactions.index') }}">
+                            <i class="fa fa-shopping-cart"></i> <span>Transaction</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+
                 </ul>
             </section>
             <!-- /.sidebar -->

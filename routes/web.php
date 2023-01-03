@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Web\ProductController;
-use App\Http\Controllers\Web\UsersController;
-use App\Models\Models\Transaction;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\UsersController;
+use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\TransactionWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('auth.login');
-
-    $code = Transaction::getCode();
-    dd($code);
+    return view('auth.login');
 })->middleware('guest');
 
 Auth::routes(['register' => false]);
@@ -31,4 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/users', [UsersController::class, 'index'])->name('data.users');
 
     Route::resource('product', ProductController::class);
+
+    Route::resource('transactions', TransactionWebController::class, [
+        'only' => ['index', 'show', 'edit', 'update'],
+    ]);
 });

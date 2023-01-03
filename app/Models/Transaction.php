@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,5 +27,15 @@ class Transaction extends Model
 
         // 0001
         return $string.$number;
+    }
+
+    public function detailRelation()
+    {
+        return $this->hasMany(\App\Models\DetailsTransaction::class, 'transaction_id', 'id');
+    }
+
+    public function userRelation()
+    {
+        return $this->hasOne(\App\Models\User::class, 'id', 'user_id');
     }
 }
