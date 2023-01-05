@@ -20,7 +20,9 @@ class UsersResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'username' => $this->username,
-            'date' => $this->created_at->diffForHumans(),
+            // 'date' => $this->created_at->diffForHumans(),
+            'api_token' => $this->api_token,
+            'is_admin' => $this->is_admin,
         ];
     }
 }
