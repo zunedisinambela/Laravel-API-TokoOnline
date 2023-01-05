@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,19 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('halo', function(){
-
-    $biodata = [
-        'name' => 'Arjun Sinambela',
-        'email' => 'zunedisinambela@gmail.com',
-        'gender' => 'male',
-        'mediasosial' => [
-            [
-                'facebook' => 'www.facebook.com/zunedisinambela',
-                'instagram' => 'www.instagram.com/arjun.sinambela'
-            ]
-        ]
-    ];
-
-    return \Response::json($biodata);
-});
+Route::get('users', [UsersController::class, 'index']);
