@@ -19,6 +19,27 @@ class UsersController extends Controller
         return UsersResource::collection($users);
     }
 
+    public function user($iduser)
+    {
+        $user = User::find($iduser);
+
+        if ($user == null) {
+            return Response::json([
+                'status' => [
+                    'code' => 404,
+                    'description' => 'Data User Not Found'
+                ]
+            ]);
+        }
+
+        return (new UsersResource($user))->additional([
+            'status' => [
+                'code' => 200,
+                'description' => 'Ok'
+            ]
+        ])->response()->setStatusCode(200);
+    }
+
     public function login(Request $request)
     {
         // return $request->all();
