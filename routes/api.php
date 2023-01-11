@@ -24,3 +24,4 @@ Route::get('users/{iduser}', [UsersController::class, 'user']);
 Route::post('auth/login', [UsersController::class, 'login']);
 Route::post('auth/register', [UsersController::class, 'register']);
 Route::post('auth/update/{iduser}', [UsersController::class, 'update']);
+Route::get('logout/{iduser}', [UsersController::class, 'logout']);

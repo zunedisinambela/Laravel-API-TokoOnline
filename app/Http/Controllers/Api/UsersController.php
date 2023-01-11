@@ -119,4 +119,27 @@ class UsersController extends Controller
             ]
         ])->response()->setStatusCode(202);
     }
+
+    public function logout($iduser)
+    {
+        $user = User::find($iduser);
+
+        if ($user == null) {
+            return Response::json([
+                'status' => [
+                    'code' => 400,
+                    'description' => 'Bad Request!'
+                ]
+            ], 400);
+        }
+
+        Auth::logout();
+
+        return Response::json([
+            'status' => [
+                'code' => 200,
+                'description' => 'Logout Success'
+            ]
+        ], 200);
+    }
 }
