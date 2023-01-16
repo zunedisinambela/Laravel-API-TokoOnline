@@ -20,7 +20,11 @@ class ProductResource extends JsonResource
             'product' => ucfirst($this->product),
             'price' => (int) $this->price,
             'stock' => (int) $this->stock,
-            'description' => $this->description
+            'description' => $this->description,
+            'image' => $this->whenLoaded(
+                'latestImage',
+                asset('uploads/'.$this->latestImage->first()->image)
+            ),
         ];
     }
 }
