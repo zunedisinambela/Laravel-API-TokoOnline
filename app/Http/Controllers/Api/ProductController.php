@@ -11,9 +11,15 @@ use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
-    public function products()
+    public function products(Request $request)
     {
-        $product = Product::paginate(10);
+        $query = Product::select('*')->orderBy('product', 'asc');
+
+        if ($request->search != null) {
+            $query->where('product', 'like', '%'. $request->search.'%');
+        }
+
+        $product = $query->paginate(10);
 
         if ($product->isEmpty()) {
             return Response::json([
