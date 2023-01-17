@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ImagesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -25,6 +26,7 @@ class ProductResource extends JsonResource
                 'latestImage',
                 asset('uploads/'.$this->latestImage->first()->image)
             ),
+            'images' => ImagesResource::collection($this->whenLoaded('imageRelation')),
         ];
     }
 }

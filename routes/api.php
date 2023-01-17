@@ -30,3 +30,4 @@ Route::get('logout/{iduser}', [UsersController::class, 'logout']);
 
 // product
 Route::get('/products', [ProductController::class, 'products']);
+Route::get('/product/{idproduct}', [ProductController::class, 'product']);
