@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\TransactionApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,6 @@ Route::get('logout/{iduser}', [UsersController::class, 'logout']);
 // product
 Route::get('/products', [ProductController::class, 'products']);
 Route::get('/product/{idproduct}', [ProductController::class, 'product']);
+
+// transaction
+Route::post('/transaction', [TransactionApiController::class, 'store']);

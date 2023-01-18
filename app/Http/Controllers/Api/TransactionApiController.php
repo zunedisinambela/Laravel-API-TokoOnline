@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use DB;
+use Auth;
+use Response;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Models\DetailsTransaction;
+use App\Http\Controllers\Controller;
+
+class TransactionApiController extends Controller
+{
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            // insert-header
+            $tr = new Transaction();
+            $tr->transaction_code = Transaction::GetCode();
+            $tr->user_id = $request->user_id;
+            $tr->destination = $request->destination;
+            $tr->ongkir = $request->ongkir;
+            $tr->grandtotal = $request->grandtotal;
+            $tr->save();
+
+            foreach ($request->detail as $detail) {
+                $product = Product::where('id', $detail['product_id'])->first();
+
+                if ($product->stock <= $detail['qty']) {
+                    DB::rollback();
+
+                    return Response::json([
+                        'status' => [
+                            'code' => 403,
+                            'description' => "$product->product Melebihi Stock"
+                        ]
+                    ]);
+                }
+
+                // detail-transaction
+                $dtl = new DetailsTransaction();
+                $dtl->transaction_id = $tr->id;
+                $dtl->product_id = $detail['product_id'];
+                $dtl->product = $product->product;
+                $dtl->qty = $detail['qty'];
+                $dtl->price = $detail['price'];
+                $dtl->total = $detail['total'];
+                $dtl->save();
+
+                $product->decrement('stock', $detail['qty']);
+            }
+
+            DB::commit();
+
+            return Response::json([
+                'status' => [
+                    'code' => 201,
+                    "description" => "Data Transaksi Berhasil dibuat"
+                ]
+            ],201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+            throw $th;
+        }
+    }
+}
