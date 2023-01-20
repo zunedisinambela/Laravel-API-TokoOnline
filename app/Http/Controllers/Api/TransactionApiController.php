@@ -12,9 +12,31 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\DetailsTransaction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionResource;
 
 class TransactionApiController extends Controller
 {
+    public function index()
+    {
+        $tra = Transaction::with('userRelation')->paginate(10);
+
+        if ($tra->isEmpty()) {
+            return Response::json([
+                'status' => [
+                    'code' => 404,
+                    'description' => 'Not Found'
+                ]
+            ],404);
+        }
+
+        return TransactionResource::collection($tra)->additional([
+            'status' => [
+                'code' => 200,
+                'description' => 'Not Found',
+            ]
+        ])->response()->setStatusCode(200);
+    }
+
     public function store(Request $request)
     {
         DB::beginTransaction();

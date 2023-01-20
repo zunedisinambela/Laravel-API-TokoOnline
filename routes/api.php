@@ -34,4 +34,5 @@ Route::get('/products', [ProductController::class, 'products']);
 Route::get('/product/{idproduct}', [ProductController::class, 'product']);
 
 // transaction
+Route::get('/transaction', [TransactionApiController::class, 'index']);
 Route::post('/transaction', [TransactionApiController::class, 'store']);

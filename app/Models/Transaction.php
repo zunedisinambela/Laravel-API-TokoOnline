@@ -14,6 +14,10 @@ class Transaction extends Model
 
     protected $guarded = ['id'];
 
+    protected $dates = [
+        'created_at', 'updated_at', 'date_transaction'
+    ];
+
     public function scopeGetCode($query)
     {
         // TR 00001
