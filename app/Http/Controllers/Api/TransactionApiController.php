@@ -92,4 +92,25 @@ class TransactionApiController extends Controller
             throw $th;
         }
     }
+
+    public function detail($code)
+    {
+        $tr = Transaction::with(['userRelation', 'detailRelation'])->where('transaction_code', $code)->first();
+
+        if ($tr == null) {
+            return Response::json([
+                "status" => [
+                    "code" => 404,
+                    "description" => "Not Found"
+                ]
+            ],404);
+        }
+
+        return (New TransactionResource($tr))->additional([
+            "status" => [
+                "code" => 200,
+                "description" => "OK"
+            ]
+        ])->response()->setStatusCode(200);
+    }
 }
