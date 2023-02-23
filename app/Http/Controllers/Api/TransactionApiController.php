@@ -118,10 +118,12 @@ class TransactionApiController extends Controller
     {
         $query = Transaction::with('userRelation')->where('user_id', $iduser);
 
-        if ($status == 'unpaid') {
-            $query->whereIn('status_transaction', ['waiting', 'pending']);
-        } elseif($status == 'paid'){
-            $query->whereIn('status_transaction', ['process', 'send']);
+        if ($status != null){
+            if ($status == 'unpaid') {
+                $query->whereIn('status_transaction', ['waiting', 'pending']);
+            } elseif($status == 'paid'){
+                $query->whereIn('status_transaction', ['process', 'send']);
+            }
         }
 
         $tr = $query->paginate(10);
