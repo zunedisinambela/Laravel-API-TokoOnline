@@ -113,4 +113,33 @@ class TransactionApiController extends Controller
             ]
         ])->response()->setStatusCode(200);
     }
+
+    public function byuser($iduser, $status = null)
+    {
+        $query = Transaction::with('userRelation')->where('user_id', $iduser);
+
+        if ($status == 'unpaid') {
+            $query->whereIn('status_transaction', ['waiting', 'pending']);
+        } elseif($status == 'paid'){
+            $query->whereIn('status_transaction', ['process', 'send']);
+        }
+
+        $tr = $query->paginate(10);
+
+        if ($tr == null) {
+            return Reponse::json([
+                'status' => [
+                    'code' => 404,
+                    'description' => "Not Found"
+                ]
+            ], 404);
+        }
+
+        return TransactionResource::collection($tr)->additional([
+            'status' => [
+                'code' => 200,
+                'description' => 'Ok'
+            ]
+        ])->response()->setStatusCode(200);
+    }
 }

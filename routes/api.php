@@ -37,3 +37,4 @@ Route::get('/product/{idproduct}', [ProductController::class, 'product']);
 Route::get('/transaction', [TransactionApiController::class, 'index']);
 Route::post('/transaction', [TransactionApiController::class, 'store']);
 Route::get('/transaction/{code}', [TransactionApiController::class, 'detail']);
+Route::get('/transaction-user/{iduser}/{status?}', [TransactionApiController::class, 'byuser']);
