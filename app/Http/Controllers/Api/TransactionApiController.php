@@ -144,4 +144,41 @@ class TransactionApiController extends Controller
             ]
         ])->response()->setStatusCode(200);
     }
+
+    public function upload(Request $request, $code)
+    {
+        $tr = Transaction::where('transaction_code', $code)->first();
+
+        if ( $tr == null ) {
+            return Response::json([
+                'status' => [
+                    'code' => 404,
+                    'description' => 'Not Found'
+                ]
+            ], 404);
+        }
+
+        if ( ! $request->hasFile('bukti')) {
+            return Response::json([
+                'status' => [
+                    'code' => 403,
+                    'description' => "Bad Request"
+                ]
+            ], 403);
+        }
+
+        $path = $request->file('bukti')->store('transaction');
+
+        $tr->update([
+            'proof_of_payment' => $path,
+            'status_transaction' => 'pending',
+        ]);
+
+        return Response::json([
+            'status' => [
+                'code' => 202,
+                'description' => 'Updated Accepted'
+            ]
+        ], 202);
+    }
 }
